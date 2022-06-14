@@ -9,8 +9,8 @@ import static io.github.bonigarcia.wdm.WebDriverManager.chromedriver;
 import static io.github.bonigarcia.wdm.WebDriverManager.firefoxdriver;
 
 public class WebDriverFactory {
-    private static ConfigFileReader configFileReader = new ConfigFileReader();
-    private static String driver = configFileReader.getBrowser();
+
+    private static String driver = ConfigFileReader.getBrowser();
 
     public static WebDriverManager initDriver() {
         switch (driver) {

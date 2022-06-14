@@ -1,10 +1,10 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
 
 public class HomePage extends BasePage {
 
@@ -14,7 +14,6 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//a[@class = 'mh-button info']")
     private WebElement personalInfoButton;
 
-
     public HomePage(WebDriver driver) {
         super(driver);
     }
@@ -23,12 +22,23 @@ public class HomePage extends BasePage {
         return profileButton;
     }
 
+    public HomePage clickOnProfileButtonAfterLogin() {
+        try {
+            profileButton.click();
+        } catch(StaleElementReferenceException staleElementReferenceException) {
+            profileButton = driver.findElement(By.xpath("//button[@class='mh-button mh-button--open']"));
+            profileButton.click();
+        }
+        return this;
+    }
+
     public WebElement getPersonalInfoButton() {
         return personalInfoButton;
     }
 
-    public void clickOnProfileButton() {
+    public LoginPage clickOnProfileButtonBeforeLogin() {
         profileButton.click();
+        return new LoginPage(driver);
     }
 
     public void clickOnPersonalInfoButton() {

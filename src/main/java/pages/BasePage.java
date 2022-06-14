@@ -9,12 +9,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-
 public class BasePage {
     WebDriver driver;
-
-    ConfigFileReader configFileReader = new ConfigFileReader();
-    private final long TIME_TO_WAIT = configFileReader.getDefaultWaitTime();
+    private static final long TIME_TO_WAIT = ConfigFileReader.getDefaultWaitTime();
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
