@@ -26,12 +26,14 @@ public class LoginPage extends BasePage {
         return emailInput;
     }
 
-    public void inputEmail(final String email) {
+    public LoginPage inputEmail(final String email) {
         emailInput.sendKeys(email);
+        return this;
     }
 
-    public void inputPassword(final String password) {
+    public LoginPage inputPassword(final String password) {
         passwordInput.sendKeys(password);
+        return this;
     }
 
     public void clickOnLoginButton() {

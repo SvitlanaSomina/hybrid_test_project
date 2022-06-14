@@ -11,13 +11,10 @@ import pages.LoginPage;
 import pages.HomePage;
 import pages.PersonalInfoPage;
 
-
 public class BaseUiTest {
     WebDriver driver;
     WebDriverManager driverManager;
-
-    ConfigFileReader configFileReader = new ConfigFileReader();
-    private final String APPLICATION_URL = configFileReader.getApplicationUrl();
+    private static final String APPLICATION_URL = ConfigFileReader.getApplicationUrl();
 
     @BeforeTest
     public void profileSetUp() {
@@ -35,7 +32,6 @@ public class BaseUiTest {
     public void tearDown() {
         driver.quit();
     }
-
 
     public WebDriver getDriver() {
         return driver;

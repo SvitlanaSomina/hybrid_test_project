@@ -8,53 +8,63 @@ import java.util.Properties;
 
 public class ConfigFileReader {
 
-    private Properties properties;
-    private final String PROPERTY_FILE_PATH = "configs//configuration.properties";
+    private static Properties properties;
+    private static final String PROPERTY_FILE_PATH = "configs//configuration.properties";
+    private static final String BROWSER = "browser";
+    private static final String DEFAULT_WAIT_TIME = "default.wait.sec";
+    private static final String URL = "url";
+    private static final String EMAIL = "email";
+    private static final String PASSWORD = "password";
+    private static final String CONFIGURATION_PROPERTIES_NOT_FOUND = "configuration.properties not found at ";
+    private static final String BROWSER_NOT_SPECIFIED = "browser not specified in the configuration.properties file.";
+    private static final String DEFAULT_WAIT_TIME_NOT_SPECIFIED = "default.wait.sec not specified in the configuration.properties file.";
+    private static final String URL_NOT_SPECIFIED = "url not specified in the configuration.properties file.";
+    private static final String EMAIL_NOT_SPECIFIED = "email not specified in the configuration.properties file.";
+    private static final String PASSWORD_NOT_SPECIFIED = "password not specified in the configuration.properties file.";
 
-    public ConfigFileReader() {
-        BufferedReader reader;
-        try {
-            reader = new BufferedReader(new FileReader(PROPERTY_FILE_PATH));
+
+    private ConfigFileReader() {
+    }
+
+    static {
+        try (BufferedReader reader = new BufferedReader(new FileReader(PROPERTY_FILE_PATH))) {
             properties = new Properties();
-            try {
-                properties.load(reader);
-                reader.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            throw new RuntimeException("configuration.properties not found at " + PROPERTY_FILE_PATH);
+            properties.load(reader);
+        } catch (FileNotFoundException fileNotFoundException) {
+            fileNotFoundException.printStackTrace();
+            throw new RuntimeException(CONFIGURATION_PROPERTIES_NOT_FOUND + PROPERTY_FILE_PATH);
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
         }
     }
 
-    public String getBrowser() {
-        String browser = properties.getProperty("browser");
+    public static String getBrowser() {
+        String browser = properties.getProperty(BROWSER);
         if(browser != null) return browser;
-        else throw new RuntimeException("browser not specified in the configuration.properties file.");
+        else throw new RuntimeException(BROWSER_NOT_SPECIFIED);
     }
 
-    public long getDefaultWaitTime() {
-        String defaultWaitTime = properties.getProperty("default.wait.sec");
+    public static long getDefaultWaitTime() {
+        String defaultWaitTime = properties.getProperty(DEFAULT_WAIT_TIME);
         if(defaultWaitTime != null) return Long.parseLong(defaultWaitTime);
-        else throw new RuntimeException("default.wait.sec not specified in the configuration.properties file.");
+        else throw new RuntimeException(DEFAULT_WAIT_TIME_NOT_SPECIFIED);
     }
 
-    public String getApplicationUrl() {
-        String url = properties.getProperty("url");
+    public static String getApplicationUrl() {
+        String url = properties.getProperty(URL);
         if(url != null) return url;
-        else throw new RuntimeException("url not specified in the configuration.properties file.");
+        else throw new RuntimeException(URL_NOT_SPECIFIED);
     }
 
-    public String getEmail() {
-        String email = properties.getProperty("email");
+    public static String getEmail() {
+        String email = properties.getProperty(EMAIL);
         if(email != null) return email;
-        else throw new RuntimeException("email not specified in the configuration.properties file.");
+        else throw new RuntimeException(EMAIL_NOT_SPECIFIED);
     }
 
-    public String getPassword() {
-        String password = properties.getProperty("password");
+    public static String getPassword() {
+        String password = properties.getProperty(PASSWORD);
         if(password != null) return password;
-        else throw new RuntimeException("password not specified in the configuration.properties file.");
+        else throw new RuntimeException(PASSWORD_NOT_SPECIFIED);
     }
 }
