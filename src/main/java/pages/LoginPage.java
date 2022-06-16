@@ -3,6 +3,7 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import utils.ReusableFunctions;
 
 public class LoginPage extends BasePage {
 
@@ -23,28 +24,36 @@ public class LoginPage extends BasePage {
     }
 
     public WebElement getEmailInput() {
+        emailInput = ReusableFunctions.getElementByXpath("//input[@id='auth']", driver);
+        log.info("Get 'Email' field");
         return emailInput;
     }
 
     public LoginPage inputEmail(final String email) {
         emailInput.sendKeys(email);
+        log.info("Input email into the 'Email' field");
         return this;
     }
 
     public LoginPage inputPassword(final String password) {
         passwordInput.sendKeys(password);
+        log.info("Input password into the 'Password' field");
         return this;
     }
 
     public void clickOnLoginButton() {
-        loginButton.click();
+        ReusableFunctions.clickElement(loginButton);
+        log.info("Click on the 'Login' button");
     }
 
     public WebElement getWarningMessage() {
-        return warningMessage;
+        warningMessage = ReusableFunctions.getElementByXpath("//span[contains(text(),'Невірна адреса електронної пошти (email) або пароль.')]", driver);
+        log.info("Get warning message");
+        return emailInput;
     }
 
     public String getWarningMessageText() {
+        log.info("Get the text of the warning message");
         return warningMessage.getText();
     }
 }

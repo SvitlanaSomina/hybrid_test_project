@@ -1,6 +1,8 @@
 package ui_tests;
 
-import dataProvider.ConfigFileReader;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import utils.ConfigFileReader;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import manager.WebDriverFactory;
 import org.openqa.selenium.WebDriver;
@@ -12,9 +14,10 @@ import pages.HomePage;
 import pages.PersonalInfoPage;
 
 public class BaseUiTest {
-    WebDriver driver;
+    public static WebDriver driver;
     WebDriverManager driverManager;
     private static final String APPLICATION_URL = ConfigFileReader.getApplicationUrl();
+    static Logger log = LogManager.getLogger();
 
     @BeforeTest
     public void profileSetUp() {
