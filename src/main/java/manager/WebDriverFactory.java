@@ -1,6 +1,6 @@
 package manager;
 
-import dataProvider.ConfigFileReader;
+import utils.ConfigFileReader;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 import static io.github.bonigarcia.wdm.WebDriverManager.edgedriver;

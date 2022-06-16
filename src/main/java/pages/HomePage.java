@@ -1,10 +1,9 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import utils.ReusableFunctions;
 
 public class HomePage extends BasePage {
 
@@ -19,29 +18,29 @@ public class HomePage extends BasePage {
     }
 
     public WebElement getProfileButton() {
+        ReusableFunctions.getElementByXpath("//button[@class='mh-button mh-button--open']", driver);
+        log.info("Get 'Profile' button");
         return profileButton;
     }
 
-    public HomePage clickOnProfileButtonAfterLogin() {
-        try {
-            profileButton.click();
-        } catch(StaleElementReferenceException staleElementReferenceException) {
-            profileButton = driver.findElement(By.xpath("//button[@class='mh-button mh-button--open']"));
-            profileButton.click();
-        }
-        return this;
+    public void clickOnProfileButtonBeforeLogin() {
+        ReusableFunctions.clickElement(profileButton);
+        log.info("Click on the 'Profile' button before login");
+    }
+
+    public void clickOnProfileButtonAfterLogin() {
+        ReusableFunctions.retryFindClick("//button[@class='mh-button mh-button--open']", driver);
+        log.info("Click on the 'Profile' button after login");
     }
 
     public WebElement getPersonalInfoButton() {
+        ReusableFunctions.getElementByXpath("//a[@class = 'mh-button info']", driver);
+        log.info("Get 'Personal Info' button");
         return personalInfoButton;
     }
 
-    public LoginPage clickOnProfileButtonBeforeLogin() {
-        profileButton.click();
-        return new LoginPage(driver);
-    }
-
     public void clickOnPersonalInfoButton() {
-        personalInfoButton.click();
+        ReusableFunctions.clickElement(personalInfoButton);
+        log.info("Click on the 'Personal Info' button");
     }
 }

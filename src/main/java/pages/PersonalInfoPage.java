@@ -14,6 +14,7 @@ public class PersonalInfoPage extends BasePage {
     }
 
     public String getEmail() {
+        log.info("Get email");
         return emailField.getText();
     }
 }

@@ -1,4 +1,4 @@
-package dataProvider;
+package utils;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -21,7 +21,6 @@ public class ConfigFileReader {
     private static final String URL_NOT_SPECIFIED = "url not specified in the configuration.properties file.";
     private static final String EMAIL_NOT_SPECIFIED = "email not specified in the configuration.properties file.";
     private static final String PASSWORD_NOT_SPECIFIED = "password not specified in the configuration.properties file.";
-
 
     private ConfigFileReader() {
     }

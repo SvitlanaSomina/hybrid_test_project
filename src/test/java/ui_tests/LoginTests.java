@@ -1,7 +1,9 @@
 package ui_tests;
 
-import dataProvider.ConfigFileReader;
+import utils.ConfigFileReader;
 import org.testng.annotations.Test;
+import utils.ReusableFunctions;
+
 import static org.testng.AssertJUnit.assertEquals;
 
 public class LoginTests extends BaseUiTest {
@@ -12,31 +14,33 @@ public class LoginTests extends BaseUiTest {
 
     @Test
     public void checkLoginWithValidEmailAndPassword() {
-        getHomePage()
-                .clickOnProfileButtonBeforeLogin()
-                .waitVisibilityOfElement(getLoginPage().getEmailInput());
+        getHomePage().clickOnProfileButtonBeforeLogin();
+        ReusableFunctions.implicitWait(driver);
+        getLoginPage().getEmailInput();
         getLoginPage()
                 .inputEmail(EMAIL)
                 .inputPassword(PASSWORD)
                 .clickOnLoginButton();
-        getHomePage().waitVisibilityOfElement(getHomePage().getProfileButton());
-        getHomePage()
-                .clickOnProfileButtonAfterLogin()
-                .waitVisibilityOfElement(getHomePage().getPersonalInfoButton());
+        getHomePage().getProfileButton();
+        ReusableFunctions.implicitWait(driver);
+        getHomePage().clickOnProfileButtonAfterLogin();
+        getHomePage().getPersonalInfoButton();
         getHomePage().clickOnPersonalInfoButton();
         assertEquals(getPersonalInfoPage().getEmail(), EMAIL);
+        log.info("Check that email is displayed on the Personal Info page");
     }
 
     @Test
     public void checkLoginWithValidEmailAndInvalidPassword() {
-        getHomePage()
-                .clickOnProfileButtonBeforeLogin()
-                .waitVisibilityOfElement(getLoginPage().getEmailInput());
+        getHomePage().clickOnProfileButtonBeforeLogin();
+        ReusableFunctions.implicitWait(driver);
+        getLoginPage().getEmailInput();
         getLoginPage()
                 .inputEmail(EMAIL)
                 .inputPassword(INVALID_PASSWORD)
                 .clickOnLoginButton();
-        getLoginPage().waitVisibilityOfElement(getLoginPage().getWarningMessage());
+        getLoginPage().getWarningMessage();
         assertEquals(getLoginPage().getWarningMessageText(), WARNING_MESSAGE_TEXT);
+        log.info("Check that the text of the warning message is: " + WARNING_MESSAGE_TEXT);
     }
 }
