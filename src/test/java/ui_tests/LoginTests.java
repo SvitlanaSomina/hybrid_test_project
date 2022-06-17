@@ -14,33 +14,31 @@ public class LoginTests extends BaseUiTest {
 
     @Test
     public void checkLoginWithValidEmailAndPassword() {
-        getHomePage().clickOnProfileButtonBeforeLogin();
+        getHomePage().clickProfileButtonBeforeLogin();
         ReusableFunctions.implicitWait(driver);
         getLoginPage().getEmailInput();
         getLoginPage()
                 .inputEmail(EMAIL)
                 .inputPassword(PASSWORD)
-                .clickOnLoginButton();
+                .clickLoginButton();
         getHomePage().getProfileButton();
         ReusableFunctions.implicitWait(driver);
-        getHomePage().clickOnProfileButtonAfterLogin();
+        getHomePage().clickProfileButtonAfterLogin();
         getHomePage().getPersonalInfoButton();
-        getHomePage().clickOnPersonalInfoButton();
+        getHomePage().clickPersonalInfoButton();
         assertEquals(getPersonalInfoPage().getEmail(), EMAIL);
-        log.info("Check that email is displayed on the Personal Info page");
     }
 
     @Test
     public void checkLoginWithValidEmailAndInvalidPassword() {
-        getHomePage().clickOnProfileButtonBeforeLogin();
+        getHomePage().clickProfileButtonBeforeLogin();
         ReusableFunctions.implicitWait(driver);
         getLoginPage().getEmailInput();
         getLoginPage()
                 .inputEmail(EMAIL)
                 .inputPassword(INVALID_PASSWORD)
-                .clickOnLoginButton();
+                .clickLoginButton();
         getLoginPage().getWarningMessage();
         assertEquals(getLoginPage().getWarningMessageText(), WARNING_MESSAGE_TEXT);
-        log.info("Check that the text of the warning message is: " + WARNING_MESSAGE_TEXT);
     }
 }

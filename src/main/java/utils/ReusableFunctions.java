@@ -27,24 +27,24 @@ public class ReusableFunctions {
     }
 
     public static WebElement getElementByCss(String css, WebDriver driver) {
-        WebElement webElement = driver.findElement(By.cssSelector(css));
-        waitVisibilityOfElement(webElement, driver);
-        return webElement;
+        List<WebElement> listOfElements = getElementsByCss(css, driver);
+        waitVisibilityOfElements(listOfElements, driver);
+        return listOfElements.get(0);
     }
 
-    public List<WebElement> getElementsByCss(String css, WebDriver driver) {
+    public static List<WebElement> getElementsByCss(String css, WebDriver driver) {
         List<WebElement> listOfElements = driver.findElements(By.cssSelector(css));
         waitVisibilityOfElements(listOfElements, driver);
         return listOfElements;
     }
 
     public static WebElement getElementByXpath(String xpath, WebDriver driver) {
-        WebElement webElement = driver.findElement(By.xpath(xpath));
-        waitVisibilityOfElement(webElement, driver);
-        return webElement;
+        List<WebElement> listOfElements = getElementsByXpath(xpath, driver);
+        waitVisibilityOfElements(listOfElements, driver);
+        return listOfElements.get(0);
     }
 
-    public List<WebElement> getElementsByXpath(String xpath, WebDriver driver) {
+    public static List<WebElement> getElementsByXpath(String xpath, WebDriver driver) {
         List<WebElement> listOfElements = driver.findElements(By.xpath(xpath));
         waitVisibilityOfElements(listOfElements, driver);
         return listOfElements;
@@ -55,12 +55,14 @@ public class ReusableFunctions {
         wait.until(ExpectedConditions.elementToBeClickable(webElement));
     }
 
-    public static void clickElement(WebElement webElement) {
+    public static void clickElement(WebElement webElement, WebDriver driver) {
+        waitForElementToBeClickable(webElement, driver);
         webElement.click();
     }
 
-    public static void clickElements(List<WebElement> listOfElements) {
+    public static void clickElements(List<WebElement> listOfElements, WebDriver driver) {
         for (WebElement element : listOfElements) {
+            waitForElementToBeClickable(element, driver);
             element.click();
         }
     }
@@ -91,8 +93,7 @@ public class ReusableFunctions {
                 log.info("The element is found and clicked");
                 break;
             } catch (StaleElementReferenceException staleElementReferenceException) {
-                staleElementReferenceException.printStackTrace();
-                log.error("The element is not found");
+                log.error(staleElementReferenceException.getMessage());
             }
         }
     }

@@ -7,6 +7,9 @@ import utils.ReusableFunctions;
 
 public class HomePage extends BasePage {
 
+    private static final String PROFILE_BUTTON = "//button[@class='mh-button mh-button--open']";
+    private static final String PERSONAL_INFO_BUTTON = "//a[@class = 'mh-button info']";
+
     @FindBy(xpath = "//button[@class='mh-button mh-button--open']")
     private WebElement profileButton;
 
@@ -18,29 +21,29 @@ public class HomePage extends BasePage {
     }
 
     public WebElement getProfileButton() {
-        ReusableFunctions.getElementByXpath("//button[@class='mh-button mh-button--open']", driver);
+        ReusableFunctions.getElementByXpath(PROFILE_BUTTON, driver);
         log.info("Get 'Profile' button");
         return profileButton;
     }
 
-    public void clickOnProfileButtonBeforeLogin() {
-        ReusableFunctions.clickElement(profileButton);
+    public void clickProfileButtonBeforeLogin() {
+        ReusableFunctions.clickElement(profileButton, driver);
         log.info("Click on the 'Profile' button before login");
     }
 
-    public void clickOnProfileButtonAfterLogin() {
-        ReusableFunctions.retryFindClick("//button[@class='mh-button mh-button--open']", driver);
+    public void clickProfileButtonAfterLogin() {
+        ReusableFunctions.retryFindClick(PROFILE_BUTTON, driver);
         log.info("Click on the 'Profile' button after login");
     }
 
     public WebElement getPersonalInfoButton() {
-        ReusableFunctions.getElementByXpath("//a[@class = 'mh-button info']", driver);
+        ReusableFunctions.getElementByXpath(PERSONAL_INFO_BUTTON, driver);
         log.info("Get 'Personal Info' button");
         return personalInfoButton;
     }
 
-    public void clickOnPersonalInfoButton() {
-        ReusableFunctions.clickElement(personalInfoButton);
+    public void clickPersonalInfoButton() {
+        ReusableFunctions.clickElement(personalInfoButton, driver);
         log.info("Click on the 'Personal Info' button");
     }
 }
