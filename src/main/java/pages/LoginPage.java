@@ -7,6 +7,9 @@ import utils.ReusableFunctions;
 
 public class LoginPage extends BasePage {
 
+    private static final String EMAIL_INPUT = "//input[@id='auth']";
+    private static final String WARNING_MESSAGE = "//span[contains(text(),'Невірна адреса електронної пошти (email) або пароль.')]";
+
     @FindBy(xpath = "//input[@id='auth']")
     private WebElement emailInput;
 
@@ -24,7 +27,7 @@ public class LoginPage extends BasePage {
     }
 
     public WebElement getEmailInput() {
-        emailInput = ReusableFunctions.getElementByXpath("//input[@id='auth']", driver);
+        emailInput = ReusableFunctions.getElementByXpath(EMAIL_INPUT, driver);
         log.info("Get 'Email' field");
         return emailInput;
     }
@@ -41,13 +44,13 @@ public class LoginPage extends BasePage {
         return this;
     }
 
-    public void clickOnLoginButton() {
-        ReusableFunctions.clickElement(loginButton);
+    public void clickLoginButton() {
+        ReusableFunctions.clickElement(loginButton, driver);
         log.info("Click on the 'Login' button");
     }
 
     public WebElement getWarningMessage() {
-        warningMessage = ReusableFunctions.getElementByXpath("//span[contains(text(),'Невірна адреса електронної пошти (email) або пароль.')]", driver);
+        warningMessage = ReusableFunctions.getElementByXpath(WARNING_MESSAGE, driver);
         log.info("Get warning message");
         return emailInput;
     }
