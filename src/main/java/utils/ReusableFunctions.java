@@ -2,21 +2,17 @@ package utils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import java.time.Duration;
 import java.util.List;
+
 
 public class ReusableFunctions {
 
     private static final long TIME_TO_WAIT;
     static Logger log;
-
 
     private ReusableFunctions() {
     }
@@ -97,21 +93,25 @@ public class ReusableFunctions {
             }
         }
     }
-    public static void verifyElementVisible(WebElement webElement) {
-        Assert.assertTrue(webElement.isDisplayed());
+    public static boolean verifyElementVisible(WebElement webElement) {
+        return webElement.isDisplayed();
     }
 
-    public static void verifyElementVisible(String xpath, WebDriver driver) {
+    public static boolean verifyElementVisible(String xpath, WebDriver driver) {
         WebElement webElement = driver.findElement(By.xpath(xpath));
-        Assert.assertTrue(webElement.isDisplayed());
+        return webElement.isDisplayed();
     }
 
-    public static void verifyElementInvisible(WebElement webElement) {
-        Assert.assertFalse(webElement.isDisplayed());
+    public static boolean verifyElementInvisible(WebElement webElement) {
+        return !webElement.isDisplayed();
     }
 
-    public static void verifyElementInvisible(String xpath, WebDriver driver) {
+    public static boolean verifyElementInvisible(String xpath, WebDriver driver) {
         WebElement webElement = driver.findElement(By.xpath(xpath));
-        Assert.assertFalse(webElement.isDisplayed());
+        return !webElement.isDisplayed();
+    }
+
+    public static void fillInputSearch(WebElement webElement, String keyword) {
+        webElement.sendKeys(keyword);
     }
 }

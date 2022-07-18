@@ -1,7 +1,11 @@
 package ui_tests;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import pages.*;
 import utils.ConfigFileReader;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import manager.WebDriverFactory;
@@ -9,9 +13,10 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
-import pages.LoginPage;
-import pages.HomePage;
-import pages.PersonalInfoPage;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
 
 public class BaseUiTest {
     public static WebDriver driver;
@@ -50,5 +55,31 @@ public class BaseUiTest {
 
     public PersonalInfoPage getPersonalInfoPage() {
         return new PersonalInfoPage(getDriver());
+    }
+
+    public CatalogPage getCatalogPage() {
+        return new CatalogPage(getDriver());
+    }
+
+    public ProductListPage getProductListPage() { return new ProductListPage(getDriver()); }
+
+    public ProductPage getProductPage() {
+        return new ProductPage(getDriver());
+    }
+
+    public ShoppingCartPage getShoppingCartPage() {
+        return new ShoppingCartPage(getDriver());
+    }
+
+    public void failedScreenshot(String testMethodName) {
+        File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        Date date = new Date();
+        String timeStampDate = date.toString().replace(":", "_").replace(" ", "_");
+        try {
+            FileUtils.copyFile(srcFile, new File("C:/Users/user/IdeaProjects/hybrid_test_project/src/test/resources/screenshots/" +
+                    testMethodName + "_" + timeStampDate + ".png"));
+        } catch (IOException ioException) {
+            log.warn(ioException.getMessage());
+        }
     }
 }
