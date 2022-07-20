@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.testng.annotations.Listeners;
 import pages.*;
 import utils.ConfigFileReader;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -18,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
+@Listeners(listeners.TestNGListeners.class)
 public class BaseUiTest {
     public static WebDriver driver;
     WebDriverManager driverManager;

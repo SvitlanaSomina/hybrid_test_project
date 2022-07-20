@@ -2,12 +2,10 @@ package ui_tests;
 
 import org.testng.Assert;
 import org.testng.SkipException;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import static org.testng.AssertJUnit.assertEquals;
 
-@Listeners(listeners.TestNGListeners.class)
 public class SearchProductTests extends BaseUiTest {
     private static final String SEARCH_KEYWORD = "Xiaomi Redmi Note 11";
     private static final String QUERY_TEXT = "xiaomi-redmi-note-11";
