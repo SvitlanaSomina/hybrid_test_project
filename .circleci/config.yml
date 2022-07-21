@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: svitlanaSomina/gradle_and_node:2.0
+      - image: svitlanasomina/gradle_and_node:2.0
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
