@@ -22,7 +22,7 @@ import java.util.Date;
 @Listeners(listeners.TestNGListeners.class)
 public class BaseUiTest {
     public static WebDriver driver;
-    WebDriverManager driverManager;
+    public static WebDriverManager driverManager;
     private static final String APPLICATION_URL = ConfigFileReader.getApplicationUrl();
     static Logger log = LogManager.getLogger();
 
@@ -39,8 +39,7 @@ public class BaseUiTest {
     }
 
     @AfterMethod
-    public void tearDown() {
-        driver.quit();
+    public void tearDown() { driver.quit();
     }
 
     public WebDriver getDriver() {
