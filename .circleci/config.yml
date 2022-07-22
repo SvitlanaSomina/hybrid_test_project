@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: cimg/openjdk:14.0
+      - image: circleci/openjdk:11-jdk-stretch-browsers 
 
     environment:
       GRADLE_OPTS: -Xmx3200m
