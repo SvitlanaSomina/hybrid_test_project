@@ -18,7 +18,6 @@ public class SearchProductTests extends BaseUiTest {
                 .clickSearchButton();
         getProductListPage().clickProductCardTitle();
         Assert.assertTrue(getProductPage().isPageUrlContainsText(QUERY_TEXT));
-        Assert.assertTrue(false);
     }
 
     @Test
@@ -35,6 +34,5 @@ public class SearchProductTests extends BaseUiTest {
         getCatalogPage().moveToSmartphonesAndPhonesButton();
         getCatalogPage().clickXiaomiButton();
         Assert.assertTrue(getProductListPage().isSearchResultsContainsSearchWord());
-        throw new SkipException("This test is skipped");
     }
 }
