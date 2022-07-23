@@ -9,7 +9,8 @@ import java.util.Properties;
 public class ConfigFileReader {
 
     private static Properties properties;
-    private static final String PROPERTY_FILE_PATH = "configs//configuration.properties";
+    //private static final String PROPERTY_FILE_PATH = "configs//configuration.properties";
+    private static final String PROPERTY_FILE_PATH = "configuration.properties";
     private static final String BROWSER = "browser";
     private static final String DEFAULT_WAIT_TIME = "default.wait.sec";
     private static final String URL = "url";
