@@ -12,22 +12,22 @@ public class LoginTests extends BaseUiTest {
     private static final String INVALID_PASSWORD = "g2dkit";
     private static final String WARNING_MESSAGE_TEXT = "Невірна адреса електронної пошти (email) або пароль.";
 
-//    @Test
-//    public void checkLoginWithValidEmailAndPassword() {
-//        getHomePage().clickProfileButtonBeforeLogin();
-//        ReusableFunctions.implicitWait(driver);
-//        getLoginPage().getEmailInput();
-//        getLoginPage()
-//                .inputEmail(EMAIL)
-//                .inputPassword(PASSWORD)
-//                .clickLoginButton();
-//        getHomePage().getProfileButton();
-//        ReusableFunctions.implicitWait(driver);
-//        getHomePage().clickProfileButtonAfterLogin();
-//        getHomePage().getPersonalInfoButton();
-//        getHomePage().clickPersonalInfoButton();
-//        assertEquals(getPersonalInfoPage().getEmail(), EMAIL);
-//    }
+    @Test
+    public void checkLoginWithValidEmailAndPassword() {
+        getHomePage().clickProfileButtonBeforeLogin();
+        ReusableFunctions.implicitWait(driver);
+        getLoginPage().getEmailInput();
+        getLoginPage()
+                .inputEmail(EMAIL)
+                .inputPassword(PASSWORD)
+                .clickLoginButton();
+        getHomePage().getProfileButton();
+        ReusableFunctions.implicitWait(driver);
+        getHomePage().clickProfileButtonAfterLogin();
+        getHomePage().getPersonalInfoButton();
+        getHomePage().clickPersonalInfoButton();
+        assertEquals(getPersonalInfoPage().getEmail(), EMAIL);
+    }
 
     @Test
     public void checkLoginWithValidEmailAndInvalidPassword() {
