@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.Listeners;
 import pages.*;
 import utils.ConfigFileReader;
@@ -14,7 +15,6 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -33,8 +33,10 @@ public class BaseUiTest {
 
     @BeforeMethod
     public void testsSetUp() {
-        driver = driverManager.create();
-        driver.manage().window().maximize();
+        ChromeOptions options = new ChromeOptions();
+        options.setHeadless(true);
+        options.addArguments("window-size=1920,1080");
+        driver = driverManager.capabilities(options).create();
         driver.get(APPLICATION_URL);
     }
 
