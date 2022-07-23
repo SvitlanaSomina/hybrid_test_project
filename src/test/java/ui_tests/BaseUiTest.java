@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.Listeners;
 import pages.*;
@@ -19,6 +20,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
+import static io.github.bonigarcia.wdm.WebDriverManager.chromedriver;
+
 @Listeners(listeners.TestNGListeners.class)
 public class BaseUiTest {
     public static WebDriver driver;
@@ -28,15 +31,21 @@ public class BaseUiTest {
 
     @BeforeTest
     public void profileSetUp() {
-        driverManager = WebDriverFactory.initDriver();
+
+        //driverManager = WebDriverFactory.initDriver();
+
+        chromedriver().setup();
     }
 
     @BeforeMethod
     public void testsSetUp() {
-        ChromeOptions options = new ChromeOptions();
-        options.setHeadless(true);
-        options.addArguments("window-size=1920,1080");
-        driver = driverManager.capabilities(options).create();
+//        ChromeOptions options = new ChromeOptions();
+//        options.setHeadless(true);
+//        options.addArguments("window-size=1920,1080");
+//        driver = driverManager.capabilities(options).create();
+
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
         driver.get(APPLICATION_URL);
     }
 
