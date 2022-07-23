@@ -48,7 +48,7 @@ public class BaseUiTest {
         options.setHeadless(true);
         options.addArguments("window-size=1920,1080");
         driver = new ChromeDriver(options);
-        driver.manage().window().maximize();
+        //driver.manage().window().maximize();
         driver.get(APPLICATION_URL);
     }
 
