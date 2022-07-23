@@ -11,7 +11,6 @@ import org.testng.annotations.Listeners;
 import pages.*;
 import utils.ConfigFileReader;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import manager.WebDriverFactory;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -25,30 +24,20 @@ import static io.github.bonigarcia.wdm.WebDriverManager.chromedriver;
 @Listeners(listeners.TestNGListeners.class)
 public class BaseUiTest {
     public static WebDriver driver;
-    public static WebDriverManager driverManager;
     private static final String APPLICATION_URL = ConfigFileReader.getApplicationUrl();
     static Logger log = LogManager.getLogger();
 
     @BeforeTest
     public void profileSetUp() {
-
-        //driverManager = WebDriverFactory.initDriver();
-
         chromedriver().setup();
     }
 
     @BeforeMethod
     public void testsSetUp() {
-//        ChromeOptions options = new ChromeOptions();
-//        options.setHeadless(true);
-//        options.addArguments("window-size=1920,1080");
-//        driver = driverManager.capabilities(options).create();
-
         ChromeOptions options = new ChromeOptions();
         options.setHeadless(true);
         options.addArguments("window-size=1920,1080");
         driver = new ChromeDriver(options);
-        //driver.manage().window().maximize();
         driver.get(APPLICATION_URL);
     }
 
