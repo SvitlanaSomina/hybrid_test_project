@@ -56,7 +56,7 @@ workflows:
     triggers:
       - schedule:
           # Every day, 0500Z(Kyiv).
-          cron: "22 9 * * *"
+          cron: "0 2 * * *"
           filters:
             branches:
               only:
