@@ -51,7 +51,7 @@ daily-run-workflow:
   triggers:
     - schedule:
         # Every day, 0500Z(Kyiv).
-        cron: "45 8 * * *"
+        cron: "55 8 * * ?"
         filters:
           branches:
             only:
