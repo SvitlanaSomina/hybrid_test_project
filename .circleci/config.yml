@@ -51,6 +51,10 @@ daily-run-workflow:
   triggers:
     - schedule:
         # Every day, 0500Z(Kyiv).
-        cron: "10 8 * * *"
+        cron: "45 8 * * *"
+        filters:
+          branches:
+            only:
+              HW_5
   jobs:
     - build
