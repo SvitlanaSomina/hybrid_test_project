@@ -11,7 +11,7 @@ public class LoginTests extends BaseUiTest {
     private static final String PASSWORD = ConfigFileReader.getPassword();
     private static final String INVALID_PASSWORD = "g2dkit";
     private static final String WARNING_MESSAGE_TEXT = "Невірна адреса електронної пошти (email) або пароль.";
-    
+
     @Test
     public void checkLoginWithValidEmailAndInvalidPassword() {
         getHomePage().clickProfileButtonBeforeLogin();
