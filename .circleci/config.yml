@@ -63,3 +63,25 @@ workflows:
                 HW_5
     jobs:
       - build
+
+    report:
+      docker:
+        - image: circleci/python:3.6.6-stretch-node-browsers
+      working_directory: ~/repo
+      steps:
+        - attach_workspace:
+            at: .
+
+        - run:
+            name: install allure CLI
+            command: |
+              uname -a
+               sudo npm install -g allure-commandline --save-dev
+        - run:
+            name: report
+            command: |
+              allure generate -c ~/repo/raw_test_result_jsons -o ~/repo/test-reports
+        - store_artifacts:
+            path: test-reports
+            destination: test-reports
+            when: always
