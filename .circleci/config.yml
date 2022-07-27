@@ -47,22 +47,36 @@ jobs:
       # run tests!
       - run: gradle test
 
-workflows:
-  version: 2
-  commit-workflow:
+  workflows:
+    version: 2
+    commit-workflow:
+      jobs:
+        - build
+    schedule-workflow:
+      triggers:
+        - schedule:
+            # Every day, 0500Z(Kyiv).
+            cron: "0 2 * * *"
+            filters:
+              branches:
+                only:
+                  HW_5
     jobs:
       - build
-  schedule-workflow:
-    triggers:
-      - schedule:
-          # Every day, 0500Z(Kyiv).
-          cron: "0 2 * * *"
-          filters:
-            branches:
-              only:
-                HW_5
-    jobs:
-      - build
+
+    working_directory: /tmp
+    steps:
+      - run:
+          name: Creating Dummy Artifacts
+          command: |
+            echo "my artifact file" > /tmp/art-1;
+            mkdir /tmp/artifacts;
+            echo "my artifact files in a dir" > /tmp/artifacts/art-2;
+      - store_artifacts:
+          path: /tmp/art-1
+          destination: artifact-file
+      - store_artifacts:
+          path: /tmp/artifacts
 
     report:
       docker:
