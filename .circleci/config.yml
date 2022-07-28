@@ -62,7 +62,7 @@ jobs:
             name: install allure CLI
             command: |
              uname -a
-            sudo npm install -g allure-commandline --save-dev
+             sudo npm install -g allure-commandline --save-dev
         - run:
             name: report
             command: |
