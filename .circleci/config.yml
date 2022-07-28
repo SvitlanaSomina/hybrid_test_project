@@ -30,6 +30,11 @@ jobs:
     steps:
       - checkout
 
+      - run:
+          name: Browsers versions
+          command: |
+            chromedriver --version
+
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -47,28 +52,7 @@ jobs:
       # run tests!
       - run: gradle test
 
-          - run:
-              name: Allure Report
-              command: mvn allure:report
-              when: always
 
-                - save_cache:
-                    paths:
-                      - ~/.m2
-                      - .allure
-                    key: $CIRCLE_PROJECT_REPONAME-{{ checksum "pom.xml" }}
-                    when: always
-                - store_test_results:
-                    path: target/surefire-reports/junitreports
-                - store_artifacts:
-                    path: target/surefire-reports
-                    #destination: report/testng-results
-                - store_artifacts:
-                    path: target/allure-results
-                    #destination: report/allure-results
-                - store_artifacts:
-                    path: target/site/allure-maven-plugin
-                    destination: Allure
 
   workflows:
     version: 2
