@@ -62,6 +62,9 @@ jobs:
 
       # run tests!
       - run: gradle test
+    
+      - store_artifacts:
+        path: ~/repo/screenshots
 
   workflows:
     version: 2
