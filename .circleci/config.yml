@@ -45,32 +45,16 @@ jobs:
 
       - run: gradle test
 
-      - persist_to_workspace:
-          root: .
-          paths:
-            - raw_test_result_jsons
-
-    report:
-      docker:
-        - image: circleci/openjdk:11-jdk-stretch-browsers
-      working_directory: ~/repo
-      steps:
-        - attach_workspace:
-            at: .
-
-        - run:
-            name: install allure CLI
-            command: |
-             uname -a
-             sudo npm install -g allure-commandline --save-dev
-        - run:
-            name: report
-            command: |
-             allure generate -c ~/repo/raw_test_result_jsons -o ~/repo/test-reports
-        - store_artifacts:
-            path: test-reports
-            destination: test-reports
-            when: always
+      - run:
+          name: generate allure report
+          command: |
+            sudo npm install -g allure-commandline
+            echo BRANCH=development >> allure-results/environment.properties
+            echo COMMIT=$CI_PULL_REQUEST/commits/$CIRCLE_SHA1 >> allure-results/environment.properties
+            allure generate --clean
+          when: always
+      - store_artifacts:
+          path: /home/circleci/project/allure-report
 
   workflows:
     version: 2
