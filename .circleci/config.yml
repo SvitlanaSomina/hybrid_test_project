@@ -1,32 +1,17 @@
-# Java Gradle CircleCI 2.0 configuration file
-# See: https://circleci.com/docs/2.0/language-java/
+
 version: 2
-
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
-
 
 jobs:
   build:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
-      # specify the version you desire here
       - image: circleci/openjdk:11-jdk-stretch-browsers
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
 
     working_directory: ~/repo
 
     environment:
-      # Customize the JVM maximum heap limit
       JVM_OPTS: -Xmx3200m
       TERM: dumb
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+
     steps:
       - checkout
       - run:
@@ -46,11 +31,9 @@ jobs:
       - store_artifacts:
           path: ~/repo/artifacts
 
-      # Download and cache dependencies
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "build.gradle" }}
-            # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
       - run: gradle dependencies
@@ -60,7 +43,6 @@ jobs:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
-      # run tests!
       - run: gradle test
 
       - persist_to_workspace:
@@ -68,27 +50,27 @@ jobs:
           paths:
             - raw_test_result_jsons
 
-        report:
-          docker:
-            - image: circleci/openjdk:11-jdk-stretch-browsers
-          working_directory: ~/repo
-          steps:
-            - attach_workspace:
-                at: .
+    report:
+      docker:
+        - image: circleci/openjdk:11-jdk-stretch-browsers
+      working_directory: ~/repo
+      steps:
+        - attach_workspace:
+            at: .
 
-            - run:
-                name: install allure CLI
-                command: |
-                  uname -a
-                   sudo npm install -g allure-commandline --save-dev
-            - run:
-                name: report
-                command: |
-                  allure generate -c ~/repo/raw_test_result_jsons -o ~/repo/test-reports
-            - store_artifacts:
-                path: test-reports
-                destination: test-reports
-                when: always
+        - run:
+            name: install allure CLI
+            command: |
+             uname -a
+            sudo npm install -g allure-commandline --save-dev
+        - run:
+            name: report
+            command: |
+             allure generate -c ~/repo/raw_test_result_jsons -o ~/repo/test-reports
+        - store_artifacts:
+            path: test-reports
+            destination: test-reports
+            when: always
 
   workflows:
     version: 2
