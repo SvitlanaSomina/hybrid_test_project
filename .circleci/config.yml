@@ -29,45 +29,10 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - checkout
-
       - run:
           name: Browsers versions
           command: |
             chromedriver --version
-
-      - run:
-          name: Creating Dummy Artifacts
-          command: |
-            echo "my artifact file" > ~/repo/art-1;
-            mkdir ~/repo/artifacts;
-            echo "my artifact files in a dir" > ~/repo/artifacts/art-2;
-      - store_artifacts:
-          path: ~/repo/art-1
-          destination: artifact-file
-      - store_artifacts:
-          path: ~/repo/artifacts
-
-#      - run:
-#          name: Make history dir for allure
-#          command: mkdir target/allure-results/history
-#      - run:
-#          name: Get previous artifact links
-#          command: curl https://circleci.com/api/v1.1/project/github/ablems/qa/{{$CIRCLE_PREVIOUS_BUILD_NUM	}}/artifacts?circle-token=${API_KEY} | grep -o 'https:\/\/[^"]*history\/history.*\.json' > artifacts.txt
-#      - run:
-#          name: Download history artfacts
-#          command: <artifacts.txt xargs -P4 -I % wget %?circle-token=$API_KEY
-#      - run:
-#          name: Rename and copy history artifacts to allure-result
-#          command: |
-#            mv history.json?circle-token=${API_KEY} history.json && mv history-trend.json?circle-token=${API_KEY} history-trend.json
-#            cp history.json target/allure-results/history/ && cp history-trend.json target/allure-results/history/
-#      - run:
-#          name: Generate allure report
-#          command: gradle allureReport
-#      - store_test_results:
-#          path: target/surefire-reports/testngreports/
-#      - store_artifacts:
-#          path: target/site/allure-gradle-plugin/
 
       # Download and cache dependencies
       - restore_cache:
@@ -85,7 +50,17 @@ jobs:
 
       # run tests!
       - run: gradle test
-
+  - run:
+      name: Creating Dummy Artifacts
+      command: |
+        echo "my artifact file" > ~/repo/art-1;
+        mkdir ~/repo/artifacts;
+        echo "my artifact files in a dir" > ~/repo/artifacts/art-2;
+      - store_artifacts:
+          path: ~/repo/art-1
+          destination: artifact-file
+      - store_artifacts:
+          path: ~/repo/artifacts
 
 
   workflows:
