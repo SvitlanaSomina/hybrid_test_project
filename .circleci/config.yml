@@ -64,10 +64,8 @@ jobs:
       - run: gradle test
 
       - store_artifacts:
-          path: ~/repo/art-1
-          destination: artifact-file
-      - store_artifacts:
-                path: ~/repo/artifacts/screenshots
+          path: ~/repo/screenshots
+          destination: screenshots
 
   workflows:
     version: 2
