@@ -57,6 +57,7 @@ jobs:
           when: always
       - store_artifacts:
           path: /home/circleci/project/allure-report
+          destination: ~/repo/artifacts
 
   workflows:
     version: 2
