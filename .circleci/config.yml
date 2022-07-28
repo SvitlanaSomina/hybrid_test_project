@@ -35,6 +35,28 @@ jobs:
           command: |
             chromedriver --version
 
+      - run:
+          name: Make history dir for allure
+          command: mkdir target/allure-results/history
+      - run:
+          name: Get previous artifact links
+          command: curl https://circleci.com/api/v1.1/project/github/ablems/qa/{{$CIRCLE_PREVIOUS_BUILD_NUM	}}/artifacts?circle-token=${API_KEY} | grep -o 'https:\/\/[^"]*history\/history.*\.json' > artifacts.txt
+      - run:
+          name: Download history artfacts
+          command: <artifacts.txt xargs -P4 -I % wget %?circle-token=$API_KEY
+      - run:
+          name: Rename and copy history artifacts to allure-result
+          command: |
+            mv history.json?circle-token=${API_KEY} history.json && mv history-trend.json?circle-token=${API_KEY} history-trend.json
+            cp history.json target/allure-results/history/ && cp history-trend.json target/allure-results/history/
+      - run:
+          name: Generate allure report
+          command: gradle allureReport
+            - store_test_results:
+                path: target/surefire-reports/testngreports/
+            - store_artifacts:
+                path: target/site/allure-maven-plugin/
+
       # Download and cache dependencies
       - restore_cache:
           keys:
