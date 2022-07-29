@@ -1,5 +1,5 @@
 
- version: 2
+version: 2
 
 jobs:
   build:
@@ -57,22 +57,22 @@ jobs:
           path: /home/circleci/project/allure-report
           destination: ~/repo/artifacts
 
- workflows:
-  version: 2
-  commit-workflow:
-   jobs:
-    - build
-  schedule-workflow:
-   triggers:
-    - schedule:
-        # Every day, 0500Z(Kyiv).
-       cron: "0 2 * * *"
-       filters:
-        branches:
-         only:
-          HW_5
- jobs:
-  - build
+  workflows:
+    version: 2
+    commit-workflow:
+      jobs:
+        - build
+    schedule-workflow:
+      triggers:
+        - schedule:
+            # Every day, 0500Z(Kyiv).
+            cron: "0 2 * * *"
+            filters:
+              branches:
+                only:
+                  HW_5
+    jobs:
+      - build
 
 
 
