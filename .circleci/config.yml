@@ -48,11 +48,12 @@ jobs:
             sudo apt-get autoclean
             sudo apt-get -f install nodejs
             sudo apt-get autoremove
-            npm -v
+
 
 #      - run: npm install -g yarn
 #      - run: yarn add -D moxci
 
+      - run: npm -v
       - run: gradle test
 
       - run:
