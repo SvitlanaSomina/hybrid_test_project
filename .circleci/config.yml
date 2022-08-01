@@ -20,6 +20,7 @@ jobs:
       - run:
           name: Install npm
           command: |
+            unset CI
             sudo apt-get install npm
       - run: npm install moxci
       - run: gradle dependency:go-offline
