@@ -47,7 +47,8 @@ jobs:
           name: Install npm
           command: |
             sudo aptitude install npm --assume-yes
-      - run: npm install moxci
+#      - run: npm install moxci
+      - run: yarn add -D moxci
 
       - run:
           name: generate allure report
