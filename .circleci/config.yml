@@ -43,9 +43,14 @@ jobs:
           name: Install npm
           command: |
             sudo apt-get install -y nodejs
+            sudo apt-get --purge remove nodejs node npm
+            sudo apt-get clean
+            sudo apt-get autoclean
+            sudo apt-get -f install
+            sudo apt-get autoremove
 
-      - run: npm install -g yarn
-      - run: yarn add -D moxci
+#      - run: npm install -g yarn
+#      - run: yarn add -D moxci
 
       - run: gradle test
 
