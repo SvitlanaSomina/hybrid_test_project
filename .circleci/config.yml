@@ -50,9 +50,11 @@ jobs:
             sudo apt-get autoremove
 
 
+
 #      - run: npm install -g yarn
 #      - run: yarn add -D moxci
 
+      - run: npm install --prefix=$HOME/.local --global
       - run: npm -v
       - run: gradle test
 
