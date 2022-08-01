@@ -15,8 +15,9 @@ jobs:
     steps:
       - checkout
       - run: mkdir test-reports
+      - run: sudo apt-get clean
+      - run: sudo apt-get autoremove
       - run: sudo apt-get update
-      - run: sudo apt-get dist-upgrade
       - run:
           name: Install npm
           command: |
@@ -25,7 +26,7 @@ jobs:
       - run: gradle dependency:go-offline
       - save_cache:
           paths:
-            - ~/.m2
+            - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
 
