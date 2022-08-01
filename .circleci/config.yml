@@ -40,7 +40,7 @@ jobs:
 
 
 
-      - run: gradle test
+#      - run: gradle test
 
       - run: sudo apt-get update
       - run:
