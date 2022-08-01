@@ -46,7 +46,7 @@ jobs:
       - run:
           name: Install npm
           command: |
-            sudo apt-get install npm
+            sudo apt-get install -f npm
       - run: npm install moxci
 
       - run:
