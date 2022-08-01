@@ -14,13 +14,10 @@ jobs:
     steps:
       - checkout
       - run: mkdir test-reports
-      - run: sudo apt-get clean
-      - run: sudo apt-get autoremove
       - run: sudo apt-get update
       - run:
           name: Install npm
           command: |
-            unset CI
             sudo apt-get install npm
       - run: npm install moxci
       - run: gradle dependency:go-offline
