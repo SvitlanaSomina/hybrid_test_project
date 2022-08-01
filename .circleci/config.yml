@@ -38,16 +38,14 @@ jobs:
 
       - run: gradle dependencies
 
-
-
-#      - run: gradle test
-
       - run: sudo apt-get install aptitude
       - run:
           name: Install npm
           command: |
             sudo aptitude install npm --assume-yes
       - run: npm install moxci
+
+      - run: gradle test
 
       - run:
           name: generate allure report
