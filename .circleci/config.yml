@@ -44,7 +44,7 @@ jobs:
           command: |
             sudo apt-get install -y nodejs
 
-      - run: npm install moxci
+      - run: yarn add -D moxci
 
       - run: gradle test
 
