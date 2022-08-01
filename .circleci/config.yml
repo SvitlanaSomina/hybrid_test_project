@@ -38,11 +38,11 @@ jobs:
 
       - run: gradle dependencies
 
-      - run: sudo apt-get install aptitude
+      - run: sudo apt-get update
       - run:
           name: Install npm
           command: |
-            sudo aptitude install npm --assume-yes
+            sudo apt-get install -y nodejs
 
       - run: npm install moxci
 
