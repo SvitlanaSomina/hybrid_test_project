@@ -34,7 +34,7 @@ jobs:
             node -v && npm -v
 #            sudo apt-get install npm
       - run: npm install moxci
-      - run: gradle dependency:go-offline
+#      - run: gradle dependency:go-offline
       - save_cache:
           paths:
             - ~/.gradle
