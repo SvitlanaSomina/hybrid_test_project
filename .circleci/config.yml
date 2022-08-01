@@ -42,11 +42,11 @@ jobs:
 
 #      - run: gradle test
 
-      - run: sudo apt-get update
+      - run: sudo apt-get install aptitude
       - run:
           name: Install npm
           command: |
-            sudo apt-get install -f npm
+            sudo aptitude install npm
       - run: npm install moxci
 
       - run:
