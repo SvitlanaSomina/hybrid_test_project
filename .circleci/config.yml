@@ -48,7 +48,6 @@ jobs:
             sudo apt-get autoclean
             sudo apt-get -f install nodejs
             sudo apt-get autoremove
-#            sudo apt-get install -y nodejs
             npm -v
 
 #      - run: npm install -g yarn
