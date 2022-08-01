@@ -16,6 +16,7 @@ jobs:
       - checkout
       - run: mkdir test-reports
       - run: sudo apt-get update
+      - run: sudo apt-get dist-upgrade
       - run:
           name: Install npm
           command: |
