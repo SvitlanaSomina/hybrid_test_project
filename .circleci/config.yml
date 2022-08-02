@@ -7,7 +7,6 @@ jobs:
 
     working_directory: ~/repo
 
-
     environment:
       JVM_OPTS: -Xmx3200m
       TERM: dumb
@@ -33,9 +32,7 @@ jobs:
             sudo apt update
             sudo apt install yarn
             node -v && npm -v
-#            sudo apt-get install npm
       - run: npm install moxci
-#      - run: gradle dependency:go-offline
       - save_cache:
           paths:
             - ~/.gradle
@@ -59,7 +56,6 @@ jobs:
           find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/testng/xml \;
           mkdir -p ~/test-results/testng/png
           find . -type f -regex ".*/src/test/resources/screenshots/.*png" -exec cp {} ~/test-results/testng/png \;
-#          find ".*/src/test/resources/screenshots" -type f -name "*.png" -exec cp {} ~/test-results/testng/png \;
          when: always
       - store_test_results:
          path: ~/test-results
@@ -67,21 +63,21 @@ jobs:
          path: ~/test-results/testng/
 
 
-#      - run:
-#          name: generate allure report
-#          command: |
-#            sudo npm install -g allure-commandline
-#            echo BRANCH=development >> allure-results/environment.properties
-#            echo COMMIT=$CI_PULL_REQUEST/commits/$CIRCLE_SHA1 >> allure-results/environment.properties
-#            allure generate --clean
-#          when: always
-#      - save_cache:
-#          paths:
-#            - ~/.gradle
-#          key: v1-dependencies-{{ checksum "build.gradle" }}
-#      - store_artifacts:
-#          path: /home/circleci/project/allure-report
-#          destination: ~/repo/artifacts
+      - run:
+          name: generate allure report
+          command: |
+            sudo npm install -g allure-commandline
+            echo BRANCH=development >> allure-results/environment.properties
+            echo COMMIT=$CI_PULL_REQUEST/commits/$CIRCLE_SHA1 >> allure-results/environment.properties
+            allure generate --clean
+          when: always
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: v1-dependencies-{{ checksum "build.gradle" }}
+      - store_artifacts:
+          path: /home/circleci/project/allure-report
+          destination: ~/repo/artifacts
 
 workflows:
   version: 2.1
