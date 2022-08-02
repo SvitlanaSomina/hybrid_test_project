@@ -55,12 +55,13 @@ jobs:
          name: Save test results
          command: |
           sleep 20s
-          mkdir -p ~/test-results/testng
-          find . -type f -regex ".*/src/test/resources/screenshots/png." -exec cp {} ~/test-results/testng \;
-          ls -R
+          mkdir -p ~/test-results/testng/
+          find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/testng/ \;
          when: always
+      - store_test_results:
+         path: ~/test-results
       - store_artifacts:
-         path: ~/test-results/testng
+         path: ~/test-results/testng/
 
 
 #      - run:
