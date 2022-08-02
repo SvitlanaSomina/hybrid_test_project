@@ -50,6 +50,17 @@ jobs:
 
       - run: gradle test
 
+      - run:
+         name: Save test results
+         command: |
+          sleep 20s
+          mkdir -p ~/test-results/screenshots
+          find . -type f -regex ".*/target/cucumber-html-reports/css.*" -exec cp {} ~/test-results/screenshots \;
+         when: always
+      - store_artifacts:
+         path: ~/test-results/screenshots
+
+
 #      - run:
 #          name: generate allure report
 #          command: |
