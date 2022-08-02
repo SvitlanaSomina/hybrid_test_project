@@ -38,21 +38,10 @@ jobs:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
-
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "build.gradle" }}
             - v1-dependencies-
-
-      - run: #STABLE
-          name: Install Chromedriver latest version
-          command: |
-            sudo apt-get update
-            sudo apt-get install lsb-release libappindicator3-1
-            curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-            sudo dpkg -i google-chrome.deb
-            sudo sed -i 's|HERE/chrome"|HERE/chrome" --no-sandbox|g' /opt/google/chrome/google-chrome
-            rm google-chrome.deb
 
       - run: gradle dependencies
 
@@ -71,28 +60,6 @@ jobs:
          path: ~/test-results
       - store_artifacts:
          path: ~/test-results/testng/
-
-      - run:
-          name: Generate environment properties
-          command: echo -e "BUILD_NUM=$CIRCLE_BUILD_NUM \nstaging=${STAGING:-alpha}" >> target/allure-results/environment.properties
-          when: always
-
-      - run:
-          name: generate allure report
-          command: |
-            mkdir -p ~/test-results/allure/allure-report
-            sudo npm install -g allure-commandline
-            echo BRANCH=development >> allure-results/environment.properties
-            echo COMMIT=$CI_PULL_REQUEST/commits/$CIRCLE_SHA1 >> allure-results/environment.properties
-            allure generate --clean
-          when: always
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: v1-dependencies-{{ checksum "build.gradle" }}
-      - store_artifacts:
-          path: ~/test-results/allure/
-#          destination: ~/repo/artifacts
 
 workflows:
   version: 2.1
