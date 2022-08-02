@@ -49,18 +49,18 @@ jobs:
       - run: gradle dependencies
 
       - run: gradle test
-      - store_test_results:
-          path: ~/repo/test_results
 
       - run:
          name: Save test results
          command: |
           sleep 20s
-          mkdir -p ~/repo/test-results/cucumber/images
-          find . -type f -regex ".*/target/cucumber-html-reports/images.*" -exec cp {} ~/repo/test-results/cucumber/images \;
+           mkdir -p ~/test-results/testng/
+           find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/test-results/testng/ \;
          when: always
+      - store_test_results:
+          path: ~/test-results
       - store_artifacts:
-         path: ~/repo/test-results/cucumber
+         path: ~/test-results/testng
 
 
 #      - run:
