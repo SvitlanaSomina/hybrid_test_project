@@ -1,7 +1,5 @@
 
 version: 2.1
-orbs:
-  gradle: circleci/gradle@3.0.0
 jobs:
   build:
     docker:
@@ -50,11 +48,7 @@ jobs:
 
       - run: gradle dependencies
 
-
-
-
-
-#      - run: gradle test
+      - run: gradle test
 
 #      - run:
 #          name: generate allure report
@@ -88,9 +82,7 @@ workflows:
             - HW_5
    jobs:
     - build
-  checkout-build-test:
-    jobs:
-      - gradle/test
+
 
 
 
