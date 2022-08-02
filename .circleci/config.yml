@@ -13,6 +13,17 @@ jobs:
 
     steps:
       - checkout
+      
+      - run: #STABLE
+          name: Install Chromedriver latest version
+          command: |
+            sudo apt-get update
+            sudo apt-get install lsb-release libappindicator3-1
+            curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+            sudo dpkg -i google-chrome.deb
+            sudo sed -i 's|HERE/chrome"|HERE/chrome" --no-sandbox|g' /opt/google/chrome/google-chrome
+            rm google-chrome.deb
+
       - run: mkdir test-reports
       - run: sudo apt-get update
       - run:
@@ -66,7 +77,7 @@ jobs:
           name: Generate environment properties
           command: echo -e "BUILD_NUM=$CIRCLE_BUILD_NUM \nstaging=${STAGING:-alpha}" >> target/allure-results/environment.properties
           when: always
-      
+
       - run:
           name: generate allure report
           command: |
