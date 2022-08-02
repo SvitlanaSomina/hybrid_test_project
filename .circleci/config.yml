@@ -60,9 +60,6 @@ jobs:
            find . -type f -regex "*.png" -exec cp {} ~/test-results/testng/ \;
            ls -R
          when: always
-      - store_test_results:
-          path: ~/test-results
-          destination: artifact-file
       - store_artifacts:
          path: ~/test-results/testng
 
