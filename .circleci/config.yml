@@ -5,7 +5,9 @@ jobs:
     docker:
       - image: circleci/openjdk:11-jdk-stretch-browsers
 
-    working_directory: ~/repo
+#    working_directory: ~/repo
+    working_directory: ~
+
 
     environment:
       JVM_OPTS: -Xmx3200m
@@ -59,6 +61,7 @@ jobs:
          when: always
       - store_test_results:
           path: ~/test-results
+          destination: artifact-file
       - store_artifacts:
          path: ~/test-results/testng
 
