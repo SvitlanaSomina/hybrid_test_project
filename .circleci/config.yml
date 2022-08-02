@@ -62,7 +62,11 @@ jobs:
       - store_artifacts:
          path: ~/test-results/testng/
 
-
+      - run:
+          name: Generate environment properties
+          command: echo -e "BUILD_NUM=$CIRCLE_BUILD_NUM \nstaging=${STAGING:-alpha}" >> target/allure-results/environment.properties
+          when: always
+      
       - run:
           name: generate allure report
           command: |
