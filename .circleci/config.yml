@@ -58,8 +58,8 @@ jobs:
           mkdir -p ~/test-results/testng/xml
           find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/testng/xml \;
           mkdir -p ~/test-results/testng/png
-          find ".*/src/test/resources/screenshots" -type f -name "*.png" -exec cp {} ~/test-results/testng/png \;
-#          find . -type f -regex ".*/build/test-results/.*png" -exec cp {} ~/test-results/testng/png \;
+          find . -type f -regex ".*/src/test/resources/screenshots/.*png" -exec cp {} ~/test-results/testng/png \;
+#          find ".*/src/test/resources/screenshots" -type f -name "*.png" -exec cp {} ~/test-results/testng/png \;
          when: always
       - store_test_results:
          path: ~/test-results
