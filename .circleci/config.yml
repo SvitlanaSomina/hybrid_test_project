@@ -54,11 +54,11 @@ jobs:
          name: Save test results
          command: |
           sleep 20s
-          mkdir -p ~/test-results/cucumber/images
-          find . -type f -regex ".*/target/cucumber-html-reports/images.*" -exec cp {} ~/test-results/cucumber/images \;
+          mkdir -p ~/repo/test-results/cucumber/images
+          find . -type f -regex ".*/target/cucumber-html-reports/images.*" -exec cp {} ~/repo/test-results/cucumber/images \;
          when: always
       - store_artifacts:
-         path: ~/test-results/cucumber
+         path: ~/repo/test-results/cucumber
 
 
 #      - run:
