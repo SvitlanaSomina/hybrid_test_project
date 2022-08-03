@@ -15,7 +15,6 @@ public class AddProductToCartTests extends BaseUiTest {
         getHomePage().clickCatalogButton();
         getCatalogPage().moveToSmartphonesAndPhonesButton();
         getCatalogPage().clickXiaomiButton();
-        driver.findElement(By.id("checkbox_id")).click();
         getProductListPage().clickProductCardTitle();
         getProductPage().waitVisibilityBuyButton();
         SoftAssertions softAssertions = new SoftAssertions();

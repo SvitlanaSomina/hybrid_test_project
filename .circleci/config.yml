@@ -32,7 +32,6 @@ jobs:
             sudo apt update
             sudo apt install yarn
             node -v && npm -v
-      - run: npm install moxci
       - save_cache:
           paths:
             - ~/.gradle
