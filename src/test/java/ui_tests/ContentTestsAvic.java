@@ -8,7 +8,7 @@ import static org.testng.Assert.assertTrue;
 
 public class ContentTestsAvic extends BaseUiTestAvic {
     private static final String REQUIRED_WORD = "elektronika";
-    private static final String SEARCH_KEYWORD = "Холодильник";
+    private static final String SEARCH_KEYWORD = "холодильник";
 
     @Test(priority = 1)
     public void checkThatUrlContainsRequiredWord(){
@@ -29,7 +29,7 @@ public class ContentTestsAvic extends BaseUiTestAvic {
         getHomePageAvic().clickHouseholdAppliancesButton();
         getFridgePageAvic().clickFridgesButton();
         for (WebElement element : getFridgePageAvic().getFridgesList()) {
-            assertTrue(element.getText().contains(SEARCH_KEYWORD));
+            assertTrue(element.getText().toLowerCase().contains(SEARCH_KEYWORD));
         }
     }
 }

@@ -13,8 +13,11 @@ public class FridgePageAvic extends BasePage {
     @FindBy(xpath = "//a[contains(@class, 'brand-box__item') and normalize-space(text()) = 'Холодильники']")
     private WebElement fridgesButton;
 
-    @FindBy(xpath = "//div[@class='item-prod col-lg-3']")
+//    @FindBy(xpath = "//div[@class='item-prod col-lg-3']")
+//    private List<WebElement> fridgesList;
+    @FindBy(xpath = "//div[@class='prod-cart__descr']")
     private List<WebElement> fridgesList;
+
 
     public FridgePageAvic(WebDriver driver) {
         super(driver);
