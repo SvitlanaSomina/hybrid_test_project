@@ -7,11 +7,14 @@ pipeline {
     }
 
      stages {
-          stage('ui_tests') {
+          stage('Build') {
               steps {
-                 withGradle {
-                         sh './gradlew test'
-                 }
+                  sh './gradlew build'
+              }
+          }
+          stage('Test') {
+              steps {
+                  sh './gradlew check'
               }
           }
      }
