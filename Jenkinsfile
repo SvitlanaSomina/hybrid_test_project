@@ -6,11 +6,9 @@ pipeline {
         gradle "Gradle 7.5"
     }
 
-    stages {
-        stage('ui_tests') {
-          steps {
-              sh './gradlew clean test --no-daemon'
+    stage('ui_tests') {
+        steps {
+            sh './gradlew clean test --no-daemon'
            }
         }
-    }
 }
