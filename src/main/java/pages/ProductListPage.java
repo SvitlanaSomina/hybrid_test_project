@@ -8,11 +8,11 @@ import java.util.List;
 
 public class ProductListPage extends BasePage {
 
-    private static final String PRODUCT_CARD_TITLE = "//a[@title = 'Xiaomi Redmi Note 11 4/128 Gr. Gray(2201117TY)' and @class = 'product-card__title']";
+    private static final String PRODUCT_CARD_TITLE = "//a[@class = 'product-card__title']";
     private static final String PRODUCTS_LIST = "//a[@class = 'product-card__title']";
     private static final String SEARCH_WORD = "Xiaomi";
 
-    @FindBy(xpath = "//a[@title = 'Xiaomi Redmi Note 11 4/128 Gr. Gray(2201117TY)' and @class = 'product-card__title']")
+    @FindBy(xpath = "//a[@class = 'product-card__title']")
     private WebElement productCardTitle;
 
     @FindBy(xpath = "//a[@class = 'product-card__title']")
