@@ -8,7 +8,7 @@ import static org.testng.Assert.assertTrue;
 
 public class ContentTestsAvic extends BaseUiTestAvic {
     private static final String REQUIRED_WORD = "elektronika";
-    private static final String SEARCH_KEYWORD = "холодильник";
+    private static final String SEARCH_KEYWORD = "холод";
 
     @Test(priority = 1)
     public void checkThatUrlContainsRequiredWord(){
