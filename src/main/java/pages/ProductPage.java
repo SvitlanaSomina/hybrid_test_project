@@ -8,10 +8,18 @@ import utils.ReusableFunctions;
 public class ProductPage extends BasePage {
 
     private static final String PRODUCT_BUY_BUTTON = "//button[@id = 'product-buy-button']";
+    private static final String STORE_ADDRESS_BUTTON = "//span[@class = 'stores-list__value']";
+    private static final String WITHDRAW_TOMORROW_BUTTON = "//div[@class= 'stores-list__store-item stores-list__store-item--select-store']";
     private static final String PRODUCT_IN_STOCK_MESSAGE = "//p[@class = 'p-trade__stock-label']";
 
     @FindBy(xpath = "//button[@id = 'product-buy-button']")
     private WebElement productBuyButton;
+
+    @FindBy(xpath = "//span[@class = 'stores-list__value']")
+    private WebElement storeAddressButton;
+
+    @FindBy(xpath = "//div[@class= 'stores-list__store-item stores-list__store-item--select-store']")
+    private WebElement withdrawTomorrowButton;
 
     @FindBy(xpath = "//p[@class = 'p-trade__stock-label']")
     private WebElement productInStockMessage;
@@ -35,6 +43,17 @@ public class ProductPage extends BasePage {
         ReusableFunctions.clickElement(productBuyButton, driver);
         log.info("Click on the 'Product Buy' button");
     }
+
+    public void clickStoreAddressButton() {
+        ReusableFunctions.clickElement(storeAddressButton, driver);
+        log.info("Click on the 'Store Address' button");
+    }
+
+    public void clickWithdrawTomorrowButton() {
+        ReusableFunctions.clickElement(withdrawTomorrowButton, driver);
+        log.info("Click on the 'Withdraw Tomorrow' button");
+    }
+
 
     public void waitVisibilityBuyButton() {
         ReusableFunctions.waitVisibilityOfElement(productBuyButton, driver);
