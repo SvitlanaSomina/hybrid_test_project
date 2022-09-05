@@ -1,11 +1,16 @@
 package api_tests;
 
+import api_model.*;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import org.testng.Assert;
+
+import static io.restassured.RestAssured.given;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 public class BaseApiTest {
 
@@ -31,5 +36,91 @@ public class BaseApiTest {
     public static void installSpecification(RequestSpecification request, ResponseSpecification response){
         RestAssured.requestSpecification = request;
         RestAssured.responseSpecification = response;
+    }
+
+    public static Login createLoginUser(String url, ResponseSpecification responseSpecification, String email, String password) {
+        installSpecification(requestSpec(url), responseSpecification);
+        return new Login(email, password);
+    }
+
+    public static Register createRegisterUser(String url, ResponseSpecification responseSpecification, String email, String password) {
+        installSpecification(requestSpec(url), responseSpecification);
+        return new Register(email, password);
+    }
+
+    public static void verifyStatusCodeLogin(Login user, String path, int statusCode) {
+        given()
+                .body(user)
+                .when()
+                .post(path)
+                .then()
+                .assertThat().statusCode(statusCode);
+    }
+
+    public static void verifyStatusCodeRegistration(Register user, String path, int statusCode) {
+        given()
+                .body(user)
+                .when()
+                .post(path)
+                .then()
+                .assertThat().statusCode(statusCode);
+    }
+
+    public static void verifyBodySuccessfulLogin(Login user, String path, String token) {
+        SuccessfulLogin successfulLogin =  given()
+                .body(user)
+                .when()
+                .post(path)
+                .then().log().all()
+                .extract().as(SuccessfulLogin.class);
+        Assert.assertEquals(successfulLogin.getToken(), token);
+    }
+
+    public static void verifyBodySuccessfulRegistration(Register user, String path, String token) {
+        SuccessfulRegister successfulRegister =  given()
+                .body(user)
+                .when()
+                .post(path)
+                .then().log().all()
+                .extract().as(SuccessfulRegister.class);
+        Assert.assertEquals(successfulRegister.getToken(), token);
+    }
+
+    public static void verifyBodyUnsuccessfulLogin(Login user, String path, String error) {
+        UnsuccessfulLogin unSuccessfulLogin =  given()
+                .body(user)
+                .when()
+                .post(path)
+                .then().log().all()
+                .extract().as(UnsuccessfulLogin.class);
+        Assert.assertEquals(unSuccessfulLogin.getError(), error);
+    }
+
+    public static void verifyBodyUnsuccessfulRegistration(Register user, String path, String error) {
+        UnsuccessfulRegister unsuccessfulRegister =  given()
+                .body(user)
+                .when()
+                .post(path)
+                .then().log().all()
+                .extract().as(UnsuccessfulRegister.class);
+        Assert.assertEquals(unsuccessfulRegister.getError(), error);
+    }
+
+    public static void verifyJsonSchemaLogin(Login user, String path, String pathToSchema) {
+        given()
+                .body(user)
+                .when()
+                .post(path)
+                .then()
+                .assertThat().body(matchesJsonSchemaInClasspath(pathToSchema));
+    }
+
+    public static void verifyJsonSchemaRegistration(Register user, String path, String pathToSchema) {
+        given()
+                .body(user)
+                .when()
+                .post(path)
+                .then()
+                .assertThat().body(matchesJsonSchemaInClasspath(pathToSchema));
     }
 }
