@@ -2,8 +2,18 @@ package api_tests;
 
 import org.testng.annotations.Test;
 
-import static constants.RequestConstants.*;
-import static constants.ResponseConstants.*;
+import static constants.RequestConstants.EMAIL_SUCCESSFUL_LOGIN;
+import static constants.RequestConstants.EMAIL_UNSUCCESSFUL_LOGIN;
+import static constants.RequestConstants.LOGIN_PATH;
+import static constants.RequestConstants.PASSWORD_SUCCESSFUL_LOGIN;
+import static constants.RequestConstants.URL;
+import static constants.RequestConstants.WRONG_PASSWORD;
+import static constants.ResponseConstants.BAD_REQUEST_STATUS_CODE;
+import static constants.ResponseConstants.EXPECTED_ERROR;
+import static constants.ResponseConstants.EXPECTED_TOKEN;
+import static constants.ResponseConstants.PATH_TO_SCHEMA_SUCCESSFUL_LOGIN;
+import static constants.ResponseConstants.PATH_TO_SCHEMA_UNSUCCESSFUL_LOGIN;
+import static constants.ResponseConstants.SUCCESS_STATUS_CODE;
 
 public class LoginTests extends BaseApiTest {
 
