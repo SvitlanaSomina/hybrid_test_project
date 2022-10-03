@@ -60,9 +60,6 @@ public class BaseApiTest {
                     if (resp.statusCode() >= 400) {
                         logger.log(Level.ERROR, request.getMethod() + " " + request.getURI() + " => "
                                 + response.getStatusCode() + " " + response.getStatusLine());
-                    } else {
-                        logger.log(Level.INFO, request.getMethod() + " " + request.getURI() + " => "
-                                + response.getStatusCode() + " " + response.getStatusLine());
                     }
                     return resp;
                 })
@@ -75,6 +72,14 @@ public class BaseApiTest {
 
     public static void verifyStatusCodeRegistration(Register user, String path, int statusCode) {
         given()
+                .filter((request, response, ctx) -> {
+                    Response resp = ctx.next(request, response);
+                    if (resp.statusCode() >= 400) {
+                        logger.log(Level.ERROR, request.getMethod() + " " + request.getURI() + " => "
+                                + response.getStatusCode() + " " + response.getStatusLine());
+                    }
+                    return resp;
+                })
                 .body(user)
                 .when()
                 .post(path)
