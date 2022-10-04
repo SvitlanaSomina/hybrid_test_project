@@ -8,8 +8,12 @@ import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.io.File;
 import java.io.IOException;
 import org.testng.Assert;
@@ -21,6 +25,7 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 public class BaseApiTest {
+    private  static Logger logger = LogManager.getLogger(BaseApiTest.class);
 
     public static RequestSpecification requestSpec(String url){
         return new RequestSpecBuilder()
@@ -58,6 +63,14 @@ public class BaseApiTest {
 
     public static void verifyStatusCodeLogin(Login user, String path, int statusCode) {
         given()
+                .filter((request, response, ctx) -> {
+                    Response resp = ctx.next(request, response);
+                    if (resp.statusCode() >= 400) {
+                        logger.log(Level.ERROR, request.getMethod() + " " + request.getURI() + " => "
+                                + response.getStatusCode() + " " + response.getStatusLine());
+                    }
+                    return resp;
+                })
                 .body(user)
                 .when()
                 .post(path)
@@ -67,10 +80,19 @@ public class BaseApiTest {
 
     public static void verifyStatusCodeRegistration(Register user, String path, int statusCode) {
         given()
+                .filter((request, response, ctx) -> {
+                    Response resp = ctx.next(request, response);
+                    if (resp.statusCode() >= 400) {
+                        logger.log(Level.ERROR, request.getMethod() + " " + request.getURI() + " => "
+                                + response.getStatusCode() + " " + response.getStatusLine());
+                    }
+                    return resp;
+                })
                 .body(user)
                 .when()
                 .post(path)
                 .then()
+                .log().status()
                 .assertThat().statusCode(statusCode);
     }
 
