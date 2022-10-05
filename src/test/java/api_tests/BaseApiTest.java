@@ -1,6 +1,9 @@
 package api_tests;
 
 import api_model.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
@@ -11,7 +14,12 @@ import io.restassured.specification.ResponseSpecification;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import java.io.File;
+import java.io.IOException;
 import org.testng.Assert;
+import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -96,6 +104,56 @@ public class BaseApiTest {
                 .then().log().all()
                 .extract().as(SuccessfulLogin.class);
         Assert.assertEquals(successfulLogin.getToken(), token);
+    }
+
+    public static void verifyBodyLoginNoPojo(Login user, String loginPath, String filePath) {
+        String responseBody =  given()
+                .body(user)
+                .when()
+                .post(loginPath)
+                .then().log().all()
+                .extract().body().asString();
+        Map<String, String> mapFromResponse = getMapFromResponseBody(responseBody);
+        Map<String, String> mapFromFile;
+        mapFromFile = readJsonFromFile(new File(filePath));
+        Assert.assertEquals(mapFromResponse, mapFromFile);
+    }
+
+    public static void verifyBodyRegistrationNoPojo(Register user, String registrationPath, String filePath) {
+        String responseBody =  given()
+                .body(user)
+                .when()
+                .post(registrationPath)
+                .then().log().all()
+                .extract().body().asString();
+        Map<String, String> mapFromResponse = getMapFromResponseBody(responseBody);
+        Map<String, String> mapFromFile;
+        mapFromFile = readJsonFromFile(new File(filePath));
+        Assert.assertEquals(mapFromResponse, mapFromFile);
+    }
+
+    private static Map<String, String> getMapFromResponseBody(String responseBody) {
+        Map<String, String> mapFromResponseBody = new HashMap<>();
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            mapFromResponseBody = mapper.readValue(responseBody, new TypeReference<>() {});
+        } catch (JsonProcessingException jsonProcessingException) {
+            jsonProcessingException.printStackTrace();
+        }
+        return mapFromResponseBody;
+    }
+
+    public static Map<String, String> readJsonFromFile(File inFile){
+        Map<String, String> mapFromFile = null;
+        ObjectMapper mapper = new ObjectMapper();
+        byte[] json = new byte[0];
+        try {
+            json = Files.readAllBytes(inFile.toPath());
+            mapFromFile = mapper.readValue(json, new TypeReference<>() {});
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+        return mapFromFile;
     }
 
     public static void verifyBodySuccessfulRegistration(Register user, String path, String token) {
