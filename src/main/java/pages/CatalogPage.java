@@ -8,10 +8,10 @@ import utils.ReusableFunctions;
 
 public class CatalogPage extends BasePage {
 
-    private static final String XIAOMI_BUTTON = "a[@class = 'mm__a3']";
+    private static final String XIAOMI_BUTTON = "//a[@href = 'https://allo.ua/ua/products/mobile/proizvoditel-xiaomi/' and contains(text(),'Xiaomi')]";
     private static final String SMARTPHONES_AND_PHONES_BUTTON = "//a[@class = 'mm__a']";
 
-    @FindBy(xpath = "//a[@class = 'mm__a3']")
+    @FindBy(xpath = "//a[@href = 'https://allo.ua/ua/products/mobile/proizvoditel-xiaomi/' and contains(text(),'Xiaomi')]")
     private WebElement xiaomiButton;
 
     @FindBy(xpath = "//a[@class = 'mm__a']")

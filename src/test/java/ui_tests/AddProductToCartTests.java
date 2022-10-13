@@ -1,12 +1,12 @@
 package ui_tests;
 
 import org.assertj.core.api.SoftAssertions;
-import org.openqa.selenium.By;
 import org.testng.annotations.Test;
+import utils.ReusableFunctions;
 
 public class AddProductToCartTests extends BaseUiTest {
 
-    private static final String PRODUCT_IN_STOCK_MESSAGE_TEXT = "✓ У магазинах Алло";
+    private static final String PRODUCT_IN_STOCK_MESSAGE_TEXT = "✓ Товар в наявності";
     private static final String EXPECTED_AMOUNT_OF_PRODUCTS_IN_CART = "1";
     private static final String PRODUCT_BUY_BUTTON_TEXT = "У кошику";
 
@@ -20,10 +20,9 @@ public class AddProductToCartTests extends BaseUiTest {
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(getProductPage().getTextOfProductInStockMessage()).isEqualTo(PRODUCT_IN_STOCK_MESSAGE_TEXT);
         softAssertions.assertThat(getProductPage().checkVisibilityProductBuyButton()).isTrue();
+        getProductPage().checkVisibilityProductBuyButton();
+        ReusableFunctions.implicitWait(driver);
         getProductPage().clickProductBuyButton();
-        getProductPage().clickStoreAddressButton();
-        getProductPage().clickWithdrawTomorrowButton();
-        getShoppingCartPage().waitVisibilityCheckoutButton();
         softAssertions.assertThat(getShoppingCartPage().checkVisibilityCheckoutButton()).isTrue();
         softAssertions.assertThat(getShoppingCartPage().checkVisibilityContinueShoppingButton()).isTrue();
         getShoppingCartPage().clickContinueShoppingButton();
