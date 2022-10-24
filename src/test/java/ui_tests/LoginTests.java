@@ -15,7 +15,7 @@ public class LoginTests extends BaseUiTest {
     @Test
     public void checkLoginWithValidEmailAndInvalidPassword() {
         getHomePage().clickProfileButtonBeforeLogin();
-        ReusableFunctions.implicitWait(driver);
+        ReusableFunctions.implicitWait(getDriver());
         getLoginPage().getEmailInput();
         getLoginPage()
                 .inputEmail(EMAIL)

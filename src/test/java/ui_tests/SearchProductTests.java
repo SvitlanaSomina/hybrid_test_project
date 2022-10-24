@@ -1,7 +1,6 @@
 package ui_tests;
 
 import org.testng.Assert;
-import org.testng.SkipException;
 import org.testng.annotations.Test;
 
 import static org.testng.AssertJUnit.assertEquals;
@@ -25,7 +24,7 @@ public class SearchProductTests extends BaseUiTest {
         getHomePage().clickCatalogButton();
         getCatalogPage().moveToSmartphonesAndPhonesButton();
         getCatalogPage().clickXiaomiButton();
-        assertEquals(getProductListPage().getProductsListSize(), EXPECTED_PRODUCTS_LIST_SIZE );
+        assertEquals(getProductListPage().getProductsListSize(), EXPECTED_PRODUCTS_LIST_SIZE);
     }
 
     @Test
