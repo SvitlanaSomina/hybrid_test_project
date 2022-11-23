@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 public class ReusableFunctions {
@@ -47,7 +48,7 @@ public class ReusableFunctions {
     }
 
     public static void waitForElementToBeClickable(WebElement webElement, WebDriver driver) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIME_TO_WAIT));
+        WebDriverWait wait = new WebDriverWait(driver, TIME_TO_WAIT);
         wait.until(ExpectedConditions.elementToBeClickable(webElement));
     }
 
@@ -64,22 +65,22 @@ public class ReusableFunctions {
     }
 
     public static void waitVisibilityOfElement(WebElement webElement, WebDriver driver) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIME_TO_WAIT));
+        WebDriverWait wait = new WebDriverWait(driver, TIME_TO_WAIT);
         wait.until(ExpectedConditions.visibilityOf(webElement));
     }
 
     public static void waitVisibilityOfElements(List<WebElement> listOfElements, WebDriver driver) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIME_TO_WAIT));
+        WebDriverWait wait = new WebDriverWait(driver, TIME_TO_WAIT);
         wait.until(ExpectedConditions.visibilityOfAllElements(listOfElements));
     }
 
     public static void waitInvisibilityOfElement(WebElement webElement, WebDriver driver) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIME_TO_WAIT));
+        WebDriverWait wait = new WebDriverWait(driver, TIME_TO_WAIT);
         wait.until(ExpectedConditions.invisibilityOf(webElement));
     }
 
     public static void implicitWait(WebDriver driver) {
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(TIME_TO_WAIT));
+        driver.manage().timeouts().implicitlyWait(TIME_TO_WAIT, TimeUnit.SECONDS);
     }
 
     public static void retryFindClick(String xpath, WebDriver driver) {

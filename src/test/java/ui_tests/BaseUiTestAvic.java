@@ -3,46 +3,44 @@ package ui_tests;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Listeners;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.annotations.*;
 import pages.ComponentsPageAvic;
 import pages.FridgePageAvic;
-import pages.HomePage;
 import pages.HomePageAvic;
-import utils.ConfigFileReader;
+import utils.CapabilityFactory;
+import java.net.MalformedURLException;
+import java.net.URL;
 
-import static io.github.bonigarcia.wdm.WebDriverManager.chromedriver;
 
 @Listeners(listeners.TestNGListeners.class)
 public class BaseUiTestAvic {
-    public static WebDriver driver;
+    protected static ThreadLocal<RemoteWebDriver> driver = new ThreadLocal<>();
+    public CapabilityFactory capabilityFactory = new CapabilityFactory();
+
     private static final String APPLICATION_URL = "https://avic.ua/";
     static Logger log = LogManager.getLogger();
 
-    @BeforeTest
-    public void profileSetUp() {
-        chromedriver().setup();
-    }
-
     @BeforeMethod
-    public void testsSetUp() {
-        ChromeOptions options = new ChromeOptions();
-        options.setHeadless(true);
-        options.addArguments("window-size=1920,1080");
-        driver = new ChromeDriver(options);
-        driver.get(APPLICATION_URL);
+    @Parameters(value = {"browser"})
+    public void testsSetUp(@Optional("chrome") String browser) throws MalformedURLException {
+        driver.set(new RemoteWebDriver(new URL("http://192.168.0.104:4444/wd/hub"), capabilityFactory.getCapabilities(browser)));
+        getDriver().manage().window().maximize();
+        getDriver().get(APPLICATION_URL);
     }
 
     @AfterMethod
-    public void tearDown() { driver.quit();
+    public void tearDown() {
+        getDriver().close();
+    }
+
+    @AfterClass
+    void terminate() {
+        driver.remove();
     }
 
     public WebDriver getDriver() {
-        return driver;
+        return driver.get();
     }
 
     public HomePageAvic getHomePageAvic() {

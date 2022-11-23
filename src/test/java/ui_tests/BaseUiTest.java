@@ -5,48 +5,48 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.annotations.Listeners;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.annotations.*;
 import pages.*;
+import utils.CapabilityFactory;
 import utils.ConfigFileReader;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Date;
 
-import static io.github.bonigarcia.wdm.WebDriverManager.chromedriver;
 
 @Listeners(listeners.TestNGListeners.class)
 public class BaseUiTest {
-    public static WebDriver driver;
+
+    protected static ThreadLocal<RemoteWebDriver> driver = new ThreadLocal<>();
+    public CapabilityFactory capabilityFactory = new CapabilityFactory();
+
     private static final String APPLICATION_URL = ConfigFileReader.getApplicationUrl();
     static Logger log = LogManager.getLogger();
 
-    @BeforeTest
-    public void profileSetUp() {
-        chromedriver().setup();
-    }
-
     @BeforeMethod
-    public void testsSetUp() {
-        ChromeOptions options = new ChromeOptions();
-        options.setHeadless(true);
-        options.addArguments("window-size=1920,1080");
-        driver = new ChromeDriver(options);
-        driver.get(APPLICATION_URL);
+    @Parameters(value = {"browser"})
+    public void testsSetUp(@Optional("chrome") String browser) throws MalformedURLException {
+        driver.set(new RemoteWebDriver(new URL("http://192.168.0.104:4444/wd/hub"), capabilityFactory.getCapabilities(browser)));
+        getDriver().manage().window().maximize();
+        getDriver().get(APPLICATION_URL);
     }
 
     @AfterMethod
-    public void tearDown() { driver.quit();
+    public void tearDown() {
+        getDriver().close();
     }
 
     public WebDriver getDriver() {
-        return driver;
+        return driver.get();
+    }
+
+    @AfterClass
+    void terminate() {
+        driver.remove();
     }
 
     public HomePage getHomePage() {
@@ -87,3 +87,4 @@ public class BaseUiTest {
         }
     }
 }
+

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite for different browsers" parallel="tests">
+    <test name="Tests on Chrome" parallel="methods" thread-count="3">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="ui_tests.SearchProductTests">
+                <methods>
+                    <include name="checkThatUrlContainsSearchWord"/>
+                    <include name="checkElementsAmountOnProductListPage"/>
+                    <include name="checkThatSearchResultsContainsSearchWord"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Tests on Firefox" parallel="methods" thread-count="3">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="ui_tests.ContentTestsAvic">
+                <methods>
+                    <include name="checkThatUrlContainsRequiredWord"/>
+                    <include name="checkElementsAmountOnSystemUnitsPage"/>
+                    <include name="checkThatAllElementsFromListContainsCategoryWord"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

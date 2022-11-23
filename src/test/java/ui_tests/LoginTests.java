@@ -13,15 +13,33 @@ public class LoginTests extends BaseUiTest {
     private static final String WARNING_MESSAGE_TEXT = "Невірна адреса електронної пошти (email) або пароль.";
 
     @Test
+    public void checkLoginWithValidEmailAndPassword() {
+        getHomePage().clickProfileButtonBeforeLogin();
+        ReusableFunctions.implicitWait(getDriver());
+        getLoginPage().getEmailInput();
+        getLoginPage()
+                .inputEmail(EMAIL)
+                .inputPassword(PASSWORD)
+                .clickLoginButton();
+        getHomePage().getProfileButton();
+        ReusableFunctions.implicitWait(getDriver());
+        getHomePage().clickProfileButtonAfterLogin();
+        getHomePage().getPersonalInfoButton();
+        getHomePage().clickPersonalInfoButton();
+        assertEquals(getPersonalInfoPage().getEmail(), EMAIL);
+    }
+
+    @Test
     public void checkLoginWithValidEmailAndInvalidPassword() {
         getHomePage().clickProfileButtonBeforeLogin();
-        ReusableFunctions.implicitWait(driver);
+        ReusableFunctions.implicitWait(getDriver());
         getLoginPage().getEmailInput();
         getLoginPage()
                 .inputEmail(EMAIL)
                 .inputPassword(INVALID_PASSWORD)
                 .clickLoginButton();
         getLoginPage().getWarningMessage();
+        ReusableFunctions.implicitWait(getDriver());
         assertEquals(getLoginPage().getWarningMessageText(), WARNING_MESSAGE_TEXT);
     }
 }

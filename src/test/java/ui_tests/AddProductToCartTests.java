@@ -21,7 +21,7 @@ public class AddProductToCartTests extends BaseUiTest {
         softAssertions.assertThat(getProductPage().getTextOfProductInStockMessage()).isEqualTo(PRODUCT_IN_STOCK_MESSAGE_TEXT);
         softAssertions.assertThat(getProductPage().checkVisibilityProductBuyButton()).isTrue();
         getProductPage().checkVisibilityProductBuyButton();
-        ReusableFunctions.implicitWait(driver);
+        ReusableFunctions.implicitWait(getDriver());
         getProductPage().clickProductBuyButton();
         softAssertions.assertThat(getShoppingCartPage().checkVisibilityCheckoutButton()).isTrue();
         softAssertions.assertThat(getShoppingCartPage().checkVisibilityContinueShoppingButton()).isTrue();
